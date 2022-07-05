@@ -1,6 +1,6 @@
 from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import CommandHandler, MessageHandler, Filters, CallbackContext, ConversationHandler
-from methods import get_regions_keyboard
+from keyboards import get_regions_keyboard
 from commands import cancel_command
 
 REGION_STEP = range(1)

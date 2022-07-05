@@ -4,7 +4,7 @@ import re
 from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import CommandHandler, MessageHandler, Filters, CallbackContext, ConversationHandler
 from telegram.utils.helpers import escape_markdown
-from methods import get_sections_keyboard, get_pages_keyboard
+from keyboards import get_sections_keyboard, get_pages_keyboard
 from commands import cancel_command
 from config import API_ADDRESS
 

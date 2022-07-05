@@ -2,8 +2,9 @@ from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import CommandHandler, MessageHandler, Filters, CallbackContext, ConversationHandler
 from telegram.utils.helpers import escape_markdown
 
-from methods import get_zonds_keyboard, device_report_callback
+from methods import  device_report_callback
 from commands import cancel_command
+from keyboards import get_zonds_keyboard
 
 ZOND_STEP = range(1)
 

@@ -3,7 +3,7 @@ from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import CommandHandler, MessageHandler, Filters, CallbackContext, ConversationHandler
 from telegram.utils.helpers import escape_markdown
 
-from methods import get_agromodels_keyboard, get_posts_keyboard
+from keyboards import get_agromodels_keyboard, get_posts_keyboard
 from commands import cancel_command
 
 AGROMODEL_STEP, POST_STEP = range(2)

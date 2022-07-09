@@ -10,7 +10,7 @@ from wiki import wiki_conv
 
 from commands import *
 
-from telegram.ext import Updater, CommandHandler, PicklePersistence
+from telegram.ext import Updater, CommandHandler, PicklePersistence, ContextTypes
 
 # Enable logging
 logging.basicConfig(
@@ -24,7 +24,11 @@ def main() -> None:
     """Start the bot."""
     # Create the Updater and pass it your bot's token
 
-    persistence = PicklePersistence(filename="conversationbot")
+    persistence = PicklePersistence(filename="conversationbot",
+                                    store_callback_data=False,
+                                    store_bot_data=False,
+                                    store_chat_data=False,
+                                    store_user_data=True)
     updater = Updater(
         "5342496177:AAFuLj90FFdry_768IyvVpleEpzTcrp-q1I",
         persistence=persistence)

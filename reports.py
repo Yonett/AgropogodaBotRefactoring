@@ -23,7 +23,7 @@ def reports_command(update: Update, context: CallbackContext) -> None:
 
 
 def enter_region(update: Update, context: CallbackContext) -> None:
-    context.user_data['region'] = update.message.text
+    context.chat_data['region'] = update.message.text
     reply_markup = ReplyKeyboardMarkup(get_companies_keyboard(context))
     update.message.reply_markdown_v2(
         text="Выберите компанию: ", reply_markup=reply_markup)
@@ -36,7 +36,7 @@ def enter_company(update: Update, context: CallbackContext) -> None:
     #     text=f"Отчёт для {update.message.text} из района {context.user_data.get('region')}",
     #     reply_markup=ReplyKeyboardRemove())
 
-    companies = context.user_data.get('companies');
+    companies = context.chat_data.get('companies');
     company = {}
     for _company in companies:
         if _company['name'] == update.message.text:

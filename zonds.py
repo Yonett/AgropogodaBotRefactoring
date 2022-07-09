@@ -18,7 +18,7 @@ def zonds_command(update: Update, context: CallbackContext) -> None:
 
 
 def enter_zond(update: Update, context: CallbackContext) -> None:
-    device = context.user_data.get('zonds')[update.message.text]
+    device = context.chat_data.get('zonds')[update.message.text]
 
     message = fr"Суточная сводка для зонда {update.message.text}" + "\n\n"
     update.message.reply_markdown_v2(

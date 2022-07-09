@@ -20,7 +20,7 @@ def wiki_command(update: Update, context: CallbackContext) -> None:
 
 
 def enter_section(update: Update, context: CallbackContext) -> None:
-    context.user_data['section'] = update.message.text
+    context.chat_data['section'] = update.message.text
     reply_markup = ReplyKeyboardMarkup(get_pages_keyboard(context))
     update.message.reply_markdown_v2(
         text="Выберите страницу: ", reply_markup=reply_markup)
@@ -32,7 +32,7 @@ def enter_page(update: Update, context: CallbackContext) -> None:
     """Print page's data"""
     url = f'{API_ADDRESS}/telegram/wiki_page/'
     chosen_page = update.message.text
-    r = requests.get(url + str(context.user_data['wiki_pages'][str(chosen_page)]))
+    r = requests.get(url + str(context.chat_data['wiki_pages'][str(chosen_page)]))
     data = r.json()
 
     update.message.reply_markdown_v2(

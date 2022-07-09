@@ -44,7 +44,7 @@ def get_agromodels_keyboard(context: CallbackContext):
             models.append(temp)
             temp = []
 
-    context.user_data['agromodels'] = agromodels
+    context.chat_data['agromodels'] = agromodels
 
     return models
 
@@ -63,14 +63,14 @@ def get_sections_keyboard(context: CallbackContext):
         buttons.append(temp)
         temp = []
 
-    context.user_data['wiki_sections'] = wiki_sections
+    context.chat_data['wiki_sections'] = wiki_sections
     return buttons
 
 
 def get_pages_keyboard(context: CallbackContext):
     url = f'{API_ADDRESS}/telegram/wiki_section/'
-    chosen_section = context.user_data.get('section')
-    r = requests.get(url + str(context.user_data.get('wiki_sections')[str(chosen_section)]))
+    chosen_section = context.chat_data.get('section')
+    r = requests.get(url + str(context.chat_data.get('wiki_sections')[str(chosen_section)]))
     data = r.json()
 
     temp = []
@@ -83,7 +83,7 @@ def get_pages_keyboard(context: CallbackContext):
         buttons.append(temp)
         temp = []
 
-    context.user_data['wiki_pages'] = wiki_pages
+    context.chat_data['wiki_pages'] = wiki_pages
     return buttons
 
 
@@ -96,12 +96,12 @@ def get_companies_keyboard(context: CallbackContext):
 
     for company in companies:
         if company['location_region_id'] > 0:
-            if company['location_region']['name'] == context.user_data.get('region'):
+            if company['location_region']['name'] == context.chat_data.get('region'):
                 temp.append(company['name'])
                 buttons.append(temp)
                 temp = []
 
-    context.user_data['companies'] = companies
+    context.chat_data['companies'] = companies
 
     return buttons
 
@@ -130,8 +130,8 @@ def get_devices_keyboard(context: CallbackContext, types=(), statuses=()):
                 temp = []
 
     if types == [4]:
-        context.user_data['posts'] = devices
+        context.chat_data['posts'] = devices
     elif types == [5, 6]:
-        context.user_data['zonds'] = devices
+        context.chat_data['zonds'] = devices
 
     return buttons

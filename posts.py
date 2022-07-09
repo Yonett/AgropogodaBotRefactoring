@@ -18,7 +18,7 @@ def posts_command(update: Update, context: CallbackContext) -> None:
 
 
 def enter_post(update: Update, context: CallbackContext) -> None:
-    device = context.user_data.get('posts')[update.message.text]
+    device = context.chat_data.get('posts')[update.message.text]
 
     message = fr"Суточная сводка для поста {update.message.text}" + "\n\n"
     update.message.reply_markdown_v2(

@@ -17,7 +17,7 @@ def agromodels_command(update: Update, context: CallbackContext) -> None:
 
 
 def enter_agromodel(update: Update, context: CallbackContext) -> None:
-    context.user_data['agromodel'] = update.message.text
+    context.chat_data['agromodel'] = update.message.text
     reply_markup = ReplyKeyboardMarkup(get_posts_keyboard(context))
     update.message.reply_markdown_v2(
         text="Выберте пост: ", reply_markup=reply_markup)
@@ -25,8 +25,8 @@ def enter_agromodel(update: Update, context: CallbackContext) -> None:
 
 
 def enter_post(update: Update, context: CallbackContext) -> None:
-    device = context.user_data.get('posts')[update.message.text]
-    link = context.user_data.get('agromodels')[context.user_data['agromodel']]
+    device = context.chat_data.get('posts')[update.message.text]
+    link = context.chat_data.get('agromodels')[context.chat_data['agromodel']]
     url = f'{link}?zond={device}'
 
     r = requests.get(url)

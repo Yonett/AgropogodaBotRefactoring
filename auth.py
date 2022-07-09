@@ -29,7 +29,7 @@ def enter_password(update: Update, context: CallbackContext) -> None:
     context.bot.deleteMessage(update.message.chat_id,
                               update.message.message_id)
 
-    _authorization_check(update, context)
+    authorization_check(update, context)
 
     return ConversationHandler.END
 
@@ -56,10 +56,10 @@ auth_conv = ConversationHandler(
             cancel_command)],
     allow_reentry=True,
     name="auth_conv",
-    persistent=True)
+    persistent=False)
 
 
-def _authorization_check(update: Update, context: CallbackContext) -> None:
+def authorization_check(update: Update, context: CallbackContext) -> None:
     url = f'{API_ADDRESS}/telegram/login'
 
     credentials = {

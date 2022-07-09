@@ -26,7 +26,7 @@ def enter_zond(update: Update, context: CallbackContext) -> None:
         reply_markup=ReplyKeyboardRemove())
 
     update.message.reply_markdown_v2(
-        text=device_report_callback(device, "zond", 1),
+        text=device_report_callback(device, "zond", period=1),
         reply_markup=ReplyKeyboardRemove())
 
     message = fr"Недельная сводка для зонда {update.message.text}" + "\n\n"
@@ -35,7 +35,7 @@ def enter_zond(update: Update, context: CallbackContext) -> None:
         reply_markup=ReplyKeyboardRemove())
 
     update.message.reply_markdown_v2(
-        text=device_report_callback(device, "zond", 7),
+        text=device_report_callback(device, "zond", period=7),
         reply_markup=ReplyKeyboardRemove())
 
     return ConversationHandler.END

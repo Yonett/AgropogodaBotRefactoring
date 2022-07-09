@@ -129,6 +129,6 @@ def get_formatted_report(digital_helper_stats: {}, metrics: {}, device_type: str
         # message += f"50 см: \t*{temperature_avg['t7']}*°C" + "\n"
         # message += f"60 см: \t*{temperature_avg['t8']}*°C" + "\n"
 
-    message += fr"Кол\-во измерений: {t['TemperatureStats']['Count']}"
+    # message += fr"Кол\-во измерений: {t['TemperatureStats']['Count']}"
 
     return message

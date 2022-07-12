@@ -5,11 +5,14 @@ from telegram.ext import ConversationHandler, CommandHandler, MessageHandler, Fi
 from commands import cancel_command
 
 from config import API_ADDRESS
+from labels import Labels
+from metrics import commands_counter
 
 LOGIN_STEP, PASSWORD_STEP = range(2)
 
 
 def authorization(update: Update, context: CallbackContext) -> None:
+    commands_counter.labels(Labels.LOGIN.value).inc()
     message = "Введите логин (например, demo)"
     update.message.reply_text(text=message)
     return LOGIN_STEP
@@ -25,7 +28,7 @@ def enter_login(update: Update, context: CallbackContext) -> None:
 
 def enter_password(update: Update, context: CallbackContext) -> None:
     hidden_password = "".join(["*" for _ in update.message.text])
-    context.user_data['password'] = update.message.text
+    # context.user_data['password'] = update.message.text
     context.bot.deleteMessage(update.message.chat_id,
                               update.message.message_id)
 
@@ -64,7 +67,7 @@ def authorization_check(update: Update, context: CallbackContext) -> None:
 
     credentials = {
         "username": context.user_data.get('username', 'Not found'),
-        "password": context.user_data.get('password', 'Not found')
+        "password": update.message.text
     }
 
     r = requests.post(url, json=credentials)

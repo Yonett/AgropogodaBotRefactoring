@@ -2,14 +2,20 @@ from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import CommandHandler, MessageHandler, Filters, CallbackContext, ConversationHandler
 from telegram.utils.helpers import escape_markdown
 
+from labels import Labels
 from methods import device_report_callback
 from commands import cancel_command
 from keyboards import get_posts_keyboard
+from decorators import auth_check, catcher, log
+from metrics import commands_counter
 
 POST_STEP = range(1)
 
-
+@catcher
+@log
+@auth_check
 def posts_command(update: Update, context: CallbackContext) -> None:
+    commands_counter.labels(Labels.POSTS.value).inc()
     reply_markup = ReplyKeyboardMarkup(get_posts_keyboard(context))
     update.message.reply_markdown_v2(
         text="Выберите пост: ", reply_markup=reply_markup)

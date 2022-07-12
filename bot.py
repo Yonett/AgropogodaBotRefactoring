@@ -1,6 +1,7 @@
 import logging
 
 from auth import auth_conv
+from config import TELEGRAM_BOT_KEY, METRICS_PORT
 from reports import reports_conv
 from regions import regions_conv
 from zonds import zonds_conv
@@ -10,7 +11,8 @@ from wiki import wiki_conv
 
 from commands import *
 
-from telegram.ext import Updater, CommandHandler, PicklePersistence, ContextTypes
+from prometheus_client import start_wsgi_server
+from telegram.ext import Updater, CommandHandler, PicklePersistence
 
 # Enable logging
 logging.basicConfig(
@@ -29,9 +31,14 @@ def main() -> None:
                                     store_bot_data=False,
                                     store_chat_data=False,
                                     store_user_data=True)
+
     updater = Updater(
-        "5342496177:AAFuLj90FFdry_768IyvVpleEpzTcrp-q1I",
+        TELEGRAM_BOT_KEY,
         persistence=persistence)
+
+    # updater = Updater(
+    #     "5342496177:AAFuLj90FFdry_768IyvVpleEpzTcrp-q1I",
+    #     persistence=persistence)
 
     # Get the dispatcher to register handlers
     dispatcher = updater.dispatcher
@@ -50,6 +57,8 @@ def main() -> None:
     dispatcher.add_handler(posts_conv)
     dispatcher.add_handler(agromodels_conv)
     dispatcher.add_handler(wiki_conv)
+
+    start_wsgi_server(METRICS_PORT)
 
     # Start the Bot
     updater.start_polling()

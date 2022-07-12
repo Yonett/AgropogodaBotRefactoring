@@ -7,12 +7,18 @@ from telegram.ext import CommandHandler, MessageHandler, Filters, CallbackContex
 from config import API_ADDRESS, MONITOR_API_ADDRESS
 from keyboards import get_regions_keyboard
 from commands import cancel_command
+from labels import Labels
 from methods import get_formatted_report
+from decorators import auth_check, catcher, log, winter_mode
+from metrics import commands_counter
 
 REGION_STEP = range(1)
 
-
+@catcher
+@log
+@auth_check
 def regions_command(update: Update, context: CallbackContext) -> None:
+    commands_counter.labels(Labels.REGIONS.value).inc()
     if not context.user_data.get('is_admin'):
         update.message.reply_markdown_v2(
             text="У вас нет прав для выполнения данной команды")
@@ -27,9 +33,6 @@ def regions_command(update: Update, context: CallbackContext) -> None:
 
 
 def enter_region(update: Update, context: CallbackContext) -> None:
-    # update.message.reply_markdown_v2(
-    #     text=f"Отчёт для {update.message.text}",
-    #     reply_markup=ReplyKeyboardRemove())
 
     headers = {'Authorization': 'Bearer ' + str(context.user_data.get('token'))}
     devices = requests.get(f"{API_ADDRESS}/lk/zonds", headers=headers).json()
@@ -52,38 +55,18 @@ def enter_region(update: Update, context: CallbackContext) -> None:
         temp = {}
         for zond_data in data_arr:
             for packet in zond_data:
+
+                if not packet[metric]:
+                    continue
+
                 if not temp.get(packet['date']):
                     temp[packet['date']] = []
 
-                if metric == 'soil1':
-                    try:
-                        if packet[metric]:
-                            temp[packet['date']].append(packet[metric] * 100 / 4096)
-                        continue
-                    except:
-                        if packet['soil1c']:
-                            temp[packet['date']].append(packet['soil1c'])
-                        continue
-                if metric == 'soil2':
-                    try:
-                        if packet[metric]:
-                            temp[packet['date']].append(packet[metric] * 100 / 4096)
-                        continue
-                    except:
-                        if packet['soil2c']:
-                            temp[packet['date']].append(packet['soil2c'])
-                        continue
-                if metric == 'soil3':
-                    try:
-                        if packet[metric]:
-                            temp[packet['date']].append(packet[metric] * 100 / 4096)
-                        continue
-                    except:
-                        if packet['soil3c']:
-                            temp[packet['date']].append(packet['soil3c'])
-                        continue
-
-                if not packet[metric]:
+                if metric in ['soil1c', 'soil2c', 'soil3c']:
+                    temp[packet['date']].append(packet[metric])
+                    continue
+                elif metric in ['soil1', 'soil2', 'soil3']:
+                    temp[packet['date']].append(packet[metric] * 100 / 4096)
                     continue
 
                 temp[packet['date']].append(packet[metric])

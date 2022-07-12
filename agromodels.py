@@ -4,12 +4,20 @@ from telegram.ext import CommandHandler, MessageHandler, Filters, CallbackContex
 from telegram.utils.helpers import escape_markdown
 
 from keyboards import get_agromodels_keyboard, get_posts_keyboard
+from decorators import auth_check, catcher, log, winter_mode
 from commands import cancel_command
+from metrics import commands_counter
+from labels import Labels
 
 AGROMODEL_STEP, POST_STEP = range(2)
 
 
+@catcher
+@log
+@auth_check
+@winter_mode
 def agromodels_command(update: Update, context: CallbackContext) -> None:
+    commands_counter.labels(Labels.AGROMODELS.value).inc()
     reply_markup = ReplyKeyboardMarkup(get_agromodels_keyboard(context))
     update.message.reply_markdown_v2(
         text="Выберите агромодель: ", reply_markup=reply_markup)

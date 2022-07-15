@@ -1,31 +1,21 @@
-import logging
-
+from agromodels import agromodels_conv
 from auth import auth_conv
 from config import TELEGRAM_BOT_KEY, METRICS_PORT, CONVERSATION_DUMP_FILE
+from posts import posts_conv
 from reports import reports_conv
 from regions import regions_conv
-from zonds import zonds_conv
-from posts import posts_conv
-from agromodels import agromodels_conv
 from wiki import wiki_conv
+from zonds import zonds_conv
 
 from commands import *
 
 from prometheus_client import start_wsgi_server
 from telegram.ext import Updater, CommandHandler, PicklePersistence
 
-# Enable logging
-logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    level=logging.INFO)
-
-logger = logging.getLogger(__name__)
-
 
 def main() -> None:
     """Start the bot."""
     # Create the Updater and pass it your bot's token
-
     persistence = PicklePersistence(filename=CONVERSATION_DUMP_FILE,
                                     store_callback_data=False,
                                     store_bot_data=False,
@@ -35,10 +25,6 @@ def main() -> None:
     updater = Updater(
         TELEGRAM_BOT_KEY,
         persistence=persistence)
-
-    # updater = Updater(
-    #     "5342496177:AAFuLj90FFdry_768IyvVpleEpzTcrp-q1I",
-    #     persistence=persistence)
 
     # Get the dispatcher to register handlers
     dispatcher = updater.dispatcher

@@ -52,7 +52,6 @@ def auth_check(func):
 
 
 def is_logged_in(_: Update, context: CallbackContext) -> bool:
-    print(context.user_data.get('token') is not False)
     return context.user_data.get('token') is not False
 
 

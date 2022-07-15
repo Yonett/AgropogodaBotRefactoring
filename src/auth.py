@@ -80,8 +80,3 @@ def authorization_check(update: Update, context: CallbackContext) -> None:
     else:
         update.message.reply_text("Неверные логин или пароль")
         update.message.reply_text("Повторная попытка: /login")
-
-    # update.message.reply_text(context.user_data.get('username', 'Not found'))
-    # update.message.reply_text(context.user_data.get('password', 'Not found'))
-    # update.message.reply_text(context.user_data.get('token', 'Not found'))
-    # update.message.reply_text(context.user_data.get('is_admin', 'Not found'))

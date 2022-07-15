@@ -1,3 +1,4 @@
+import logging
 import requests
 
 from telegram.ext import CallbackContext
@@ -123,6 +124,7 @@ def get_devices_keyboard(context: CallbackContext, types=(), statuses=()):
             except Exception as e:
                 print(e)
                 continue
+
             name = f"{n} ({lc}, {lr})"
             devices[name] = n
             temp.append(name)

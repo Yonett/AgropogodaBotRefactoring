@@ -90,8 +90,6 @@ def enter_company(update: Update, context: CallbackContext) -> None:
 
             data = r.json()
 
-            print(data)
-
             if data is not None and len(data) == 8:
                 data_arr.append(data)
 

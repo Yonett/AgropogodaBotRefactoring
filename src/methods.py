@@ -45,8 +45,8 @@ def device_report_callback(device: str, device_type: str, period: int):
         message = "Ой, что-то пошло не так. Попробуйте позже, скоро всё исправим!"
         return message
 
-    message = get_formatted_report(digital_helper_stats=r.json(), metrics=m.json(), device_type=device_type,
-                                   period=period)
+    message = get_formatted_report(digital_helper_stats=r.json(), metrics=m.json(),
+                                   device_type=device_type, period=period)
     return message
 
 

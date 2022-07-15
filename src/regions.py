@@ -97,7 +97,6 @@ def enter_region(update: Update, context: CallbackContext) -> None:
 
             if len(posts_stats) == 0:
                 posts_stats = r.json()
-                print(posts_stats)
             else:
                 if r.json()['PeakTemperature']['MaxT'] > posts_stats['PeakTemperature']['MaxT']:
                     posts_stats['PeakTemperature']['MaxT'] = r.json()['PeakTemperature']['MaxT']

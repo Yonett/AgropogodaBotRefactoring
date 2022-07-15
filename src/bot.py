@@ -1,3 +1,5 @@
+import logging
+
 from agromodels import agromodels_conv
 from auth import auth_conv
 from config import TELEGRAM_BOT_KEY, METRICS_PORT, CONVERSATION_DUMP_FILE
@@ -11,6 +13,13 @@ from commands import *
 
 from prometheus_client import start_wsgi_server
 from telegram.ext import Updater, CommandHandler, PicklePersistence
+
+
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO)
+
+logger = logging.getLogger(__name__)
 
 
 def main() -> None:

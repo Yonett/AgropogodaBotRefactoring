@@ -9,7 +9,7 @@ from keyboards import get_regions_keyboard
 from commands import cancel_command
 from labels import Labels
 from methods import get_formatted_report
-from decorators import auth_check, catcher, log, winter_mode
+from decorators import auth_check, catcher, log
 from metrics import commands_counter
 
 REGION_STEP = range(1)

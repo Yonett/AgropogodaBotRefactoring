@@ -132,4 +132,4 @@ dmypy.json
 .idea/
 
 # Conversations dump
-conversationbot
+data/conversationbot

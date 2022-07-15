@@ -1,0 +1,4 @@
+python-telegram-bot
+python-dateutil
+requests~=2.25.0
+prometheus_client

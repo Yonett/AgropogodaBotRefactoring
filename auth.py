@@ -11,7 +11,7 @@ from metrics import commands_counter
 LOGIN_STEP, PASSWORD_STEP = range(2)
 
 
-def authorization(update: Update, context: CallbackContext) -> None:
+def authorization(update: Update, _: CallbackContext) -> None:
     commands_counter.labels(Labels.LOGIN.value).inc()
     message = "Введите логин (например, demo)"
     update.message.reply_text(text=message)
@@ -27,7 +27,7 @@ def enter_login(update: Update, context: CallbackContext) -> None:
 
 
 def enter_password(update: Update, context: CallbackContext) -> None:
-    hidden_password = "".join(["*" for _ in update.message.text])
+    # hidden_password = "".join(["*" for _ in update.message.text])
     # context.user_data['password'] = update.message.text
     context.bot.deleteMessage(update.message.chat_id,
                               update.message.message_id)

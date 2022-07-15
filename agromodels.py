@@ -28,7 +28,7 @@ def enter_agromodel(update: Update, context: CallbackContext) -> None:
     context.chat_data['agromodel'] = update.message.text
     reply_markup = ReplyKeyboardMarkup(get_posts_keyboard(context))
     update.message.reply_markdown_v2(
-        text="Выберте пост: ", reply_markup=reply_markup)
+        text="Выберите пост: ", reply_markup=reply_markup)
     return POST_STEP
 
 

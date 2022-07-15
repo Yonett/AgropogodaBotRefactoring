@@ -65,9 +65,8 @@ def get_formatted_report(digital_helper_stats: {}, metrics: {}, device_type: str
 
                 t[key1][key2] = str(t[key1][key2]).replace("-", r'\-')
 
+    temperature_avg = {'t0': 0, 't1': 0, 't2': 0, 't3': 0, 't4': 0, 't5': 0, 't6': 0}
     if device_type == "zond":
-        temperature_avg = {'t0': 0, 't1': 0, 't2': 0, 't3': 0, 't4': 0, 't5': 0, 't6': 0}
-
         for m in metrics:
             for level in temperature_avg.keys():
                 temperature_avg[level] += m[level]

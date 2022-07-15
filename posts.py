@@ -11,6 +11,7 @@ from metrics import commands_counter
 
 POST_STEP = range(1)
 
+
 @catcher
 @log
 @auth_check

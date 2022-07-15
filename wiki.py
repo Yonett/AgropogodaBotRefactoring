@@ -7,7 +7,7 @@ from telegram.utils.helpers import escape_markdown
 from keyboards import get_sections_keyboard, get_pages_keyboard
 from commands import cancel_command
 from config import API_ADDRESS
-from decorators import auth_check, catcher, log
+from decorators import log
 from labels import Labels
 from metrics import commands_counter
 
@@ -16,7 +16,7 @@ SECTION_STEP, PAGE_STEP = range(2)
 
 # @catcher
 @log
-#@auth_check
+# @auth_check
 def wiki_command(update: Update, context: CallbackContext) -> None:
     commands_counter.labels(Labels.WIKI.value).inc()
     reply_markup = ReplyKeyboardMarkup(get_sections_keyboard(context))

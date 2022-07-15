@@ -14,6 +14,7 @@ from metrics import commands_counter
 
 REGION_STEP = range(1)
 
+
 @catcher
 @log
 @auth_check

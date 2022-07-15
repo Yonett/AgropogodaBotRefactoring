@@ -51,12 +51,12 @@ def auth_check(func):
     return wrap
 
 
-def is_logged_in(update: Update, context: CallbackContext) -> bool:
+def is_logged_in(_: Update, context: CallbackContext) -> bool:
     print(context.user_data.get('token') is not False)
     return context.user_data.get('token') is not False
 
 
-def no_login(update: Update, context: CallbackContext) -> None:
+def no_login(update: Update, _: CallbackContext) -> None:
     message = "Пожалуйста, авторизуйтесь: /login"
     update.message.reply_markdown_v2(text=message)
 
@@ -68,7 +68,7 @@ def winter_mode(func):
         else:
             func(update, context)
 
-    def no_act(update: Update, context: CallbackContext) -> None:
+    def no_act(update: Update, _: CallbackContext) -> None:
         message = "В зимнее время недоступно."
         update.message.reply_text(message)
 

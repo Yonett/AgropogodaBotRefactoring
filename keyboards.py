@@ -116,18 +116,18 @@ def get_devices_keyboard(context: CallbackContext, types=(), statuses=()):
 
     for z in zonds:
         if z['zond_status_id'] in statuses and z['zond_type_id'] in types:
-                try:
-                    n = z['number_in_db']
-                    lr = (z['location_region']['short_name']) if z['location_region'] else 'Неизвестно'
-                    lc = (z['location_city']['name']) if z['location_city'] else 'Неизвестно'
-                except Exception as e:
-                    print(e)
-                    continue
-                name = f"{n} ({lc}, {lr})"
-                devices[name] = n
-                temp.append(name)
-                buttons.append(temp)
-                temp = []
+            try:
+                n = z['number_in_db']
+                lr = (z['location_region']['short_name']) if z['location_region'] else 'Неизвестно'
+                lc = (z['location_city']['name']) if z['location_city'] else 'Неизвестно'
+            except Exception as e:
+                print(e)
+                continue
+            name = f"{n} ({lc}, {lr})"
+            devices[name] = n
+            temp.append(name)
+            buttons.append(temp)
+            temp = []
 
     if types == [4]:
         context.chat_data['posts'] = devices

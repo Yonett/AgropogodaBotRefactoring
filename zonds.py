@@ -3,13 +3,14 @@ from telegram.ext import CommandHandler, MessageHandler, Filters, CallbackContex
 from telegram.utils.helpers import escape_markdown
 
 from labels import Labels
-from methods import  device_report_callback
+from methods import device_report_callback
 from commands import cancel_command
 from keyboards import get_zonds_keyboard
 from decorators import auth_check, catcher, log
 from metrics import commands_counter
 
 ZOND_STEP = range(1)
+
 
 @catcher
 @log

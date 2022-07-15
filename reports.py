@@ -16,10 +16,11 @@ from metrics import commands_counter
 
 REGION_STEP, COMPANY_STEP = range(2)
 
+
 @catcher
 @log
 @auth_check
-def reports_command(update: Update, context: CallbackContext) -> None:
+def reports_command(update: Update, _: CallbackContext) -> None:
     commands_counter.labels(Labels.REPORTS.value).inc()
     reply_markup = ReplyKeyboardMarkup(get_regions_keyboard())
     update.message.reply_markdown_v2(
@@ -38,8 +39,7 @@ def enter_region(update: Update, context: CallbackContext) -> None:
 
 
 def enter_company(update: Update, context: CallbackContext) -> None:
-
-    companies = context.chat_data.get('companies');
+    companies = context.chat_data.get('companies')
     company = {}
     for _company in companies:
         if _company['name'] == update.message.text:

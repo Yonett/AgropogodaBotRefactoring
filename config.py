@@ -9,3 +9,6 @@ IS_WINTER = bool(os.getenv('IS_WINTER', False))
 
 API_ADDRESS = os.getenv("API_ADDRESS", "https://agropogoda.com/api")
 MONITOR_API_ADDRESS = os.getenv("MONITOR_API_ADDRESS", "https://monitor.agropogoda.com/api")
+
+CONVERSATION_DUMP_FILE = os.getenv("CONVERSATION_DUMP_FILE", "conversationbot")
+

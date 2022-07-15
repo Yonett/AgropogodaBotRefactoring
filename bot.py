@@ -1,7 +1,7 @@
 import logging
 
 from auth import auth_conv
-from config import TELEGRAM_BOT_KEY, METRICS_PORT
+from config import TELEGRAM_BOT_KEY, METRICS_PORT, CONVERSATION_DUMP_FILE
 from reports import reports_conv
 from regions import regions_conv
 from zonds import zonds_conv
@@ -26,7 +26,7 @@ def main() -> None:
     """Start the bot."""
     # Create the Updater and pass it your bot's token
 
-    persistence = PicklePersistence(filename="conversationbot",
+    persistence = PicklePersistence(filename=CONVERSATION_DUMP_FILE,
                                     store_callback_data=False,
                                     store_bot_data=False,
                                     store_chat_data=False,

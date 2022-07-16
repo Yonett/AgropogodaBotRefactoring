@@ -2,7 +2,7 @@ import logging
 import time
 
 from telegram import Update
-from telegram.ext import CallbackContext
+from telegram.ext import CallbackContext, ConversationHandler
 
 from config import IS_WINTER
 from metrics import fails_counter
@@ -10,7 +10,7 @@ from metrics import fails_counter
 logger = logging.getLogger("bot")
 
 
-def log(func):
+def log(func) -> bool:
     """Logging decorator."""
 
     def logs(update: Update, context: CallbackContext):
@@ -30,12 +30,15 @@ def catcher(func):
 
     def catch(update: Update, context: CallbackContext):
         try:
-            func(update, context)
+            result = func(update, context)
         except Exception as ex:
+            result = ConversationHandler.END
             fails_counter.inc()
             logger.error(ex)
             message = r"Извините, у нас возникли технические сложности\. Вскоре мы все исправим\."
             update.message.reply_markdown_v2(message)
+        finally:
+            return result
 
     return catch
 
@@ -44,23 +47,26 @@ def auth_check(func):
 
     def wrap(update: Update, context: CallbackContext):
         if is_logged_in(update, context):
-            func(update, context)
+            result = func(update, context)
         else:
-            no_login(update, context)
+            result = no_login(update, context)
+
+        return result
 
     return wrap
 
 
 def is_logged_in(_: Update, context: CallbackContext) -> bool:
-    return context.user_data.get('token') is not False
+    return context.user_data.get('token') is not (False and None)
 
 
-def no_login(update: Update, _: CallbackContext) -> None:
+def no_login(update: Update, _: CallbackContext):
     message = "Пожалуйста, авторизуйтесь: /login"
     update.message.reply_markdown_v2(text=message)
+    return ConversationHandler.END
 
 
-def winter_mode(func):
+def winter_mode(func) -> bool:
     def wrap(update: Update, context: CallbackContext):
         if IS_WINTER is True:
             no_act(update, context)

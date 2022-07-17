@@ -9,13 +9,13 @@ from keyboards import get_zonds_keyboard
 from decorators import auth_check, catcher, log
 from metrics import commands_counter
 
-ZOND_STEP = range(1)
+ZOND_STEP, _ = range(2)
 
 
 @catcher
 @log
 @auth_check
-def zonds_command(update: Update, context: CallbackContext) -> None:
+def zonds_command(update: Update, context: CallbackContext):
     commands_counter.labels(Labels.ZONDS.value).inc()
     reply_markup = ReplyKeyboardMarkup(get_zonds_keyboard(context))
     update.message.reply_markdown_v2(
@@ -24,7 +24,7 @@ def zonds_command(update: Update, context: CallbackContext) -> None:
     return ZOND_STEP
 
 
-def enter_zond(update: Update, context: CallbackContext) -> None:
+def enter_zond(update: Update, context: CallbackContext):
     device = context.chat_data.get('zonds')[update.message.text]
 
     message = fr"Суточная сводка для зонда {update.message.text}" + "\n\n"

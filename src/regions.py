@@ -12,13 +12,13 @@ from methods import get_formatted_report
 from decorators import auth_check, catcher, log
 from metrics import commands_counter
 
-REGION_STEP = range(1)
+REGION_STEP, _ = range(2)
 
 
 @catcher
 @log
 @auth_check
-def regions_command(update: Update, context: CallbackContext) -> None:
+def regions_command(update: Update, context: CallbackContext):
     commands_counter.labels(Labels.REGIONS.value).inc()
     if not context.user_data.get('is_admin'):
         update.message.reply_markdown_v2(
@@ -33,8 +33,7 @@ def regions_command(update: Update, context: CallbackContext) -> None:
         return REGION_STEP
 
 
-def enter_region(update: Update, context: CallbackContext) -> None:
-
+def enter_region(update: Update, context: CallbackContext):
     headers = {'Authorization': 'Bearer ' + str(context.user_data.get('token'))}
     devices = requests.get(f"{API_ADDRESS}/lk/zonds", headers=headers).json()
 
@@ -43,8 +42,7 @@ def enter_region(update: Update, context: CallbackContext) -> None:
     for device in devices:
         try:
             lr = (device['location_region']['name']) if device['location_region'] else 'Неизвестно'
-        except Exception as e:
-            print(e)
+        except KeyError:
             continue
         if lr == update.message.text:
             filtered.append(device)
@@ -115,7 +113,7 @@ def enter_region(update: Update, context: CallbackContext) -> None:
                     posts_stats['PeakHumidity']['MinDate'] = r.json()['PeakHumidity']['MinDate']
 
                 if r.json()['WindStats']['MaxWindGusts'] > posts_stats['WindStats']['MaxWindGusts']:
-                    posts_stats['WindStats']['MaxWindGusts'] = r.json()['WindStats']['MaxWindGusts'];
+                    posts_stats['WindStats']['MaxWindGusts'] = r.json()['WindStats']['MaxWindGusts']
 
                 posts_stats['FARStats']['IntegralSum'] += r.json()['FARStats']['IntegralSum']
                 posts_stats['RainfallStats']['Sum'] += r.json()['RainfallStats']['Sum']

@@ -37,8 +37,8 @@ def catcher(func):
             logger.error(ex)
             message = r"Извините, у нас возникли технические сложности\. Вскоре мы все исправим\."
             update.message.reply_markdown_v2(message)
-        finally:
-            return result
+
+        return result
 
     return catch
 
@@ -66,14 +66,14 @@ def no_login(update: Update, _: CallbackContext):
     return ConversationHandler.END
 
 
-def winter_mode(func) -> bool:
+def winter_mode(func):
     def wrap(update: Update, context: CallbackContext):
         if IS_WINTER is True:
-            no_act(update, context)
-        else:
-            func(update, context)
+            return no_act(update, context)
 
-    def no_act(update: Update, _: CallbackContext) -> None:
+        return func(update, context)
+
+    def no_act(update: Update, _: CallbackContext):
         message = "В зимнее время недоступно."
         update.message.reply_text(message)
 

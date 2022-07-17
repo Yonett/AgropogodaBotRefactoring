@@ -20,7 +20,7 @@ REGION_STEP, COMPANY_STEP = range(2)
 @catcher
 @log
 @auth_check
-def reports_command(update: Update, _: CallbackContext) -> None:
+def reports_command(update: Update, _: CallbackContext):
     commands_counter.labels(Labels.REPORTS.value).inc()
     reply_markup = ReplyKeyboardMarkup(get_regions_keyboard())
     update.message.reply_markdown_v2(
@@ -29,7 +29,7 @@ def reports_command(update: Update, _: CallbackContext) -> None:
     return REGION_STEP
 
 
-def enter_region(update: Update, context: CallbackContext) -> None:
+def enter_region(update: Update, context: CallbackContext):
     context.chat_data['region'] = update.message.text
     reply_markup = ReplyKeyboardMarkup(get_companies_keyboard(context))
     update.message.reply_markdown_v2(
@@ -38,7 +38,7 @@ def enter_region(update: Update, context: CallbackContext) -> None:
     return COMPANY_STEP
 
 
-def enter_company(update: Update, context: CallbackContext) -> None:
+def enter_company(update: Update, context: CallbackContext):
     companies = context.chat_data.get('companies')
     company = {}
     for _company in companies:

@@ -1,4 +1,3 @@
-import logging
 import requests
 
 from telegram.ext import CallbackContext
@@ -121,8 +120,7 @@ def get_devices_keyboard(context: CallbackContext, types=(), statuses=()):
                 n = z['number_in_db']
                 lr = (z['location_region']['short_name']) if z['location_region'] else 'Неизвестно'
                 lc = (z['location_city']['name']) if z['location_city'] else 'Неизвестно'
-            except Exception as e:
-                print(e)
+            except KeyError:
                 continue
 
             name = f"{n} ({lc}, {lr})"

@@ -22,7 +22,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def main() -> None:
+def main():
     """Start the bot."""
     # Create the Updater and pass it your bot's token
     persistence = PicklePersistence(filename=CONVERSATION_DUMP_FILE,

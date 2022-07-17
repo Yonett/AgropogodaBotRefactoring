@@ -11,14 +11,14 @@ from metrics import commands_counter
 LOGIN_STEP, PASSWORD_STEP = range(2)
 
 
-def authorization(update: Update, _: CallbackContext) -> None:
+def authorization(update: Update, _: CallbackContext):
     commands_counter.labels(Labels.LOGIN.value).inc()
     message = "Введите логин (например, demo)"
     update.message.reply_text(text=message)
     return LOGIN_STEP
 
 
-def enter_login(update: Update, context: CallbackContext) -> None:
+def enter_login(update: Update, context: CallbackContext):
     context.user_data['username'] = update.message.text
     context.user_data['token'] = False
     context.user_data['is_admin'] = False
@@ -26,7 +26,7 @@ def enter_login(update: Update, context: CallbackContext) -> None:
     return PASSWORD_STEP
 
 
-def enter_password(update: Update, context: CallbackContext) -> None:
+def enter_password(update: Update, context: CallbackContext):
     # hidden_password = "".join(["*" for _ in update.message.text])
     # context.user_data['password'] = update.message.text
     context.bot.deleteMessage(update.message.chat_id,
@@ -62,7 +62,7 @@ auth_conv = ConversationHandler(
     persistent=False)
 
 
-def authorization_check(update: Update, context: CallbackContext) -> None:
+def authorization_check(update: Update, context: CallbackContext):
     url = f'{API_ADDRESS}/telegram/login'
 
     credentials = {

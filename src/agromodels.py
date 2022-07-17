@@ -17,7 +17,7 @@ AGROMODEL_STEP, POST_STEP = range(2)
 @log
 @auth_check
 @winter_mode
-def agromodels_command(update: Update, context: CallbackContext) -> None:
+def agromodels_command(update: Update, context: CallbackContext):
     commands_counter.labels(Labels.AGROMODELS.value).inc()
     reply_markup = ReplyKeyboardMarkup(get_agromodels_keyboard(context))
     update.message.reply_markdown_v2(
@@ -25,7 +25,7 @@ def agromodels_command(update: Update, context: CallbackContext) -> None:
     return AGROMODEL_STEP
 
 
-def enter_agromodel(update: Update, context: CallbackContext) -> None:
+def enter_agromodel(update: Update, context: CallbackContext):
     context.chat_data['agromodel'] = update.message.text
     reply_markup = ReplyKeyboardMarkup(get_posts_keyboard(context))
     update.message.reply_markdown_v2(
@@ -33,7 +33,7 @@ def enter_agromodel(update: Update, context: CallbackContext) -> None:
     return POST_STEP
 
 
-def enter_post(update: Update, context: CallbackContext) -> None:
+def enter_post(update: Update, context: CallbackContext):
     device = context.chat_data.get('posts')[update.message.text]
     link = context.chat_data.get('agromodels')[context.chat_data['agromodel']]
     url = f'{link}?zond={device}'
@@ -59,13 +59,11 @@ agromodels_conv = ConversationHandler(
     states={
         AGROMODEL_STEP: [
             MessageHandler(
-                Filters.text & (
-                    ~ Filters.text(f"/{Labels.CANCEL.value}")),
+                Filters.text & (~ Filters.text(f"/{Labels.CANCEL.value}")),
                 enter_agromodel)],
         POST_STEP: [
             MessageHandler(
-                Filters.text & (
-                    ~ Filters.text(f"/{Labels.CANCEL.value}")),
+                Filters.text & (~ Filters.text(f"/{Labels.CANCEL.value}")),
                 enter_post)]},
     fallbacks=[
         CommandHandler(

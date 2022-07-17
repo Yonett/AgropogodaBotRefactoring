@@ -9,13 +9,13 @@ from keyboards import get_posts_keyboard
 from decorators import auth_check, catcher, log
 from metrics import commands_counter
 
-POST_STEP = range(1)
+POST_STEP, _ = range(2)
 
 
 @catcher
 @log
 @auth_check
-def posts_command(update: Update, context: CallbackContext) -> None:
+def posts_command(update: Update, context: CallbackContext):
     commands_counter.labels(Labels.POSTS.value).inc()
     reply_markup = ReplyKeyboardMarkup(get_posts_keyboard(context))
     update.message.reply_markdown_v2(
@@ -24,7 +24,7 @@ def posts_command(update: Update, context: CallbackContext) -> None:
     return POST_STEP
 
 
-def enter_post(update: Update, context: CallbackContext) -> None:
+def enter_post(update: Update, context: CallbackContext):
     device = context.chat_data.get('posts')[update.message.text]
 
     message = fr"Суточная сводка для поста {update.message.text}" + "\n\n"

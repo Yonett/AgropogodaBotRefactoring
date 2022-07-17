@@ -18,7 +18,7 @@ SECTION_STEP, PAGE_STEP = range(2)
 @catcher
 @auth_check
 @log
-def wiki_command(update: Update, context: CallbackContext) -> None:
+def wiki_command(update: Update, context: CallbackContext):
     commands_counter.labels(Labels.WIKI.value).inc()
     reply_markup = ReplyKeyboardMarkup(get_sections_keyboard(context))
     update.message.reply_markdown_v2(
@@ -27,7 +27,7 @@ def wiki_command(update: Update, context: CallbackContext) -> None:
     return SECTION_STEP
 
 
-def enter_section(update: Update, context: CallbackContext) -> None:
+def enter_section(update: Update, context: CallbackContext):
     context.chat_data['section'] = update.message.text
     reply_markup = ReplyKeyboardMarkup(get_pages_keyboard(context))
     update.message.reply_markdown_v2(
@@ -36,7 +36,7 @@ def enter_section(update: Update, context: CallbackContext) -> None:
     return PAGE_STEP
 
 
-def enter_page(update: Update, context: CallbackContext) -> None:
+def enter_page(update: Update, context: CallbackContext):
     """Print page's data"""
     url = f'{API_ADDRESS}/telegram/wiki_page/'
     chosen_page = update.message.text

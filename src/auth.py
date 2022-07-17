@@ -40,22 +40,22 @@ def enter_password(update: Update, context: CallbackContext) -> None:
 auth_conv = ConversationHandler(
     entry_points=[
         CommandHandler(
-            'login',
+            Labels.LOGIN.value,
             authorization)],
     states={
         LOGIN_STEP: [
             MessageHandler(
                 Filters.text & (
-                    ~ Filters.text("/cancel")),
+                    ~ Filters.text(f"/{Labels.CANCEL.value}")),
                 enter_login)],
         PASSWORD_STEP: [
             MessageHandler(
                 Filters.text & (
-                    ~ Filters.text("/cancel")),
+                    ~ Filters.text(f"/{Labels.CANCEL.value}")),
                 enter_password)]},
     fallbacks=[
         CommandHandler(
-            'cancel',
+            Labels.CANCEL.value,
             cancel_command)],
     allow_reentry=True,
     name="auth_conv",

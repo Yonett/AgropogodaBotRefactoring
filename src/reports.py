@@ -147,22 +147,22 @@ def enter_company(update: Update, context: CallbackContext) -> None:
 reports_conv = ConversationHandler(
     entry_points=[
         CommandHandler(
-            'reports',
+            Labels.REPORTS.value,
             reports_command)],
     states={
         REGION_STEP: [
             MessageHandler(
                 Filters.text & (
-                    ~ Filters.text("/cancel")),
+                    ~ Filters.text(f"/{Labels.CANCEL.value}")),
                 enter_region)],
         COMPANY_STEP: [
             MessageHandler(
                 Filters.text & (
-                    ~ Filters.text("/cancel")),
+                    ~ Filters.text(f"/{Labels.CANCEL.value}")),
                 enter_company)]},
     fallbacks=[
         CommandHandler(
-            'cancel',
+            Labels.CANCEL.value,
             cancel_command)],
     allow_reentry=True,
     persistent=False)

@@ -49,11 +49,11 @@ def enter_zond(update: Update, context: CallbackContext) -> None:
 
 
 zonds_conv = ConversationHandler(
-    entry_points=[CommandHandler('zonds', zonds_command)],
+    entry_points=[CommandHandler(Labels.ZONDS.value, zonds_command)],
     states={
         ZOND_STEP: [MessageHandler(Filters.text & (
-            ~ Filters.text("/cancel")), enter_zond)]
+            ~ Filters.text(f"/{Labels.CANCEL.value}")), enter_zond)]
     },
-    fallbacks=[CommandHandler('cancel', cancel_command)],
+    fallbacks=[CommandHandler(Labels.CANCEL.value, cancel_command)],
     allow_reentry=True,
     persistent=False)

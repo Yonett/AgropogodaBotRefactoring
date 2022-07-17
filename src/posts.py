@@ -49,10 +49,10 @@ def enter_post(update: Update, context: CallbackContext) -> None:
 
 
 posts_conv = ConversationHandler(
-    entry_points=[CommandHandler('posts', posts_command)],
+    entry_points=[CommandHandler(Labels.POSTS.value, posts_command)],
     states={
-        POST_STEP: [MessageHandler(Filters.text & (~ Filters.text("/cancel")), enter_post)]
+        POST_STEP: [MessageHandler(Filters.text & (~ Filters.text(f"/{Labels.CANCEL.value}")), enter_post)]
     },
-    fallbacks=[CommandHandler('cancel', cancel_command)],
+    fallbacks=[CommandHandler(Labels.CANCEL.value, cancel_command)],
     allow_reentry=True,
     persistent=False)

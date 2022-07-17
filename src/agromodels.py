@@ -54,22 +54,22 @@ def enter_post(update: Update, context: CallbackContext) -> None:
 agromodels_conv = ConversationHandler(
     entry_points=[
         CommandHandler(
-            'agromodels',
+            Labels.AGROMODELS.value,
             agromodels_command)],
     states={
         AGROMODEL_STEP: [
             MessageHandler(
                 Filters.text & (
-                    ~ Filters.text("/cancel")),
+                    ~ Filters.text(f"/{Labels.CANCEL.value}")),
                 enter_agromodel)],
         POST_STEP: [
             MessageHandler(
                 Filters.text & (
-                    ~ Filters.text("/cancel")),
+                    ~ Filters.text(f"/{Labels.CANCEL.value}")),
                 enter_post)]},
     fallbacks=[
         CommandHandler(
-            'cancel',
+            Labels.CANCEL.value,
             cancel_command)],
     allow_reentry=True,
     persistent=False)

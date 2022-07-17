@@ -39,10 +39,10 @@ def main() -> None:
     dispatcher = updater.dispatcher
 
     # REGISTER COMMANDS WITHOUT CONVERSATIONS
-    dispatcher.add_handler(CommandHandler("start", start_command))
-    dispatcher.add_handler(CommandHandler("help", help_command))
-    dispatcher.add_handler(CommandHandler("rainfall", rainfall_command))
-    dispatcher.add_handler(CommandHandler("legend", legend_command))
+    dispatcher.add_handler(CommandHandler(Labels.START.value, start_command))
+    dispatcher.add_handler(CommandHandler(Labels.HELP.value, help_command))
+    dispatcher.add_handler(CommandHandler(Labels.RAINFALL.value, rainfall_command))
+    dispatcher.add_handler(CommandHandler(Labels.LEGEND.value, legend_command))
 
     # REGISTER CONVERSATIONS
     dispatcher.add_handler(auth_conv)

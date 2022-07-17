@@ -174,11 +174,11 @@ def enter_region(update: Update, context: CallbackContext) -> None:
 
 
 regions_conv = ConversationHandler(
-    entry_points=[CommandHandler('regions', regions_command)],
+    entry_points=[CommandHandler(Labels.REGIONS.value, regions_command)],
     states={
         REGION_STEP: [MessageHandler(Filters.text & (
-            ~ Filters.text("/cancel")), enter_region)]
+            ~ Filters.text(f"/{Labels.CANCEL.value}")), enter_region)]
     },
-    fallbacks=[CommandHandler('cancel', cancel_command)],
+    fallbacks=[CommandHandler(Labels.CANCEL.value, cancel_command)],
     allow_reentry=True,
     persistent=False)

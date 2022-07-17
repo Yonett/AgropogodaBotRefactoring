@@ -10,7 +10,7 @@ from metrics import fails_counter
 logger = logging.getLogger("bot")
 
 
-def log(func) -> bool:
+def log(func):
     """Logging decorator."""
 
     def logs(update: Update, context: CallbackContext):

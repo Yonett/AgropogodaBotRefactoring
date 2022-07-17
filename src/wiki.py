@@ -57,20 +57,20 @@ def enter_page(update: Update, context: CallbackContext) -> None:
 wiki_conv = ConversationHandler(
     entry_points=[
         CommandHandler(
-            'wiki',
+            Labels.WIKI.value,
             wiki_command)],
     states={
         SECTION_STEP: [
             MessageHandler(
-                Filters.text & (~ Filters.text("/cancel")),
+                Filters.text & (~ Filters.text(f"/{Labels.CANCEL.value}")),
                 enter_section)],
         PAGE_STEP: [
             MessageHandler(
-                Filters.text & (~ Filters.text("/cancel")),
+                Filters.text & (~ Filters.text(f"/{Labels.CANCEL.value}")),
                 enter_page)]},
     fallbacks=[
         CommandHandler(
-            'cancel',
+            Labels.CANCEL.value,
             cancel_command)],
     allow_reentry=True,
     persistent=False)

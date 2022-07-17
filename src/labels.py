@@ -5,6 +5,8 @@ class Labels(Enum):
     """Contains commands for bot"""
     START = "start"
     HELP = "help"
+    CANCEL = "cancel"
+
     LOGIN = "login"
 
     ZONDS = "zonds"

@@ -32,14 +32,14 @@ def start_command(update: Update, _: CallbackContext) -> None:
 def help_command(update: Update, _: CallbackContext) -> None:
     commands_counter.labels(Labels.HELP.value).inc()
     message = r"К вашим услугам\! Вот что я умею:" + "\n"
-    message += r"/reports \- печать отчёта для компании" + "\n"
-    message += r"/regions \- печать отчёта для района" + "\n"
-    message += r"/zonds \- печать метеосводки для зондов" + "\n"
-    message += r"/posts \- печать метеосводки для постов" + "\n"
-    message += r"/rainfall \- данные по осадкам" + "\n"
-    message += r"/agromodels \- доступные агромодели" + "\n"
-    message += r"/wiki \- справочник платформы" + "\n"
-    message += r"/legend \- сокращения районов" + "\n"
+    message += rf"/{Labels.REPORTS.value} \- печать отчёта для компании" + "\n"
+    message += rf"/{Labels.REGIONS.value} \- печать отчёта для района" + "\n"
+    message += rf"/{Labels.ZONDS.value} \- печать метеосводки для зондов" + "\n"
+    message += rf"/{Labels.POSTS.value} \- печать метеосводки для постов" + "\n"
+    message += rf"/{Labels.RAINFALL.value} \- данные по осадкам" + "\n"
+    message += rf"/{Labels.AGROMODELS.value} \- доступные агромодели" + "\n"
+    message += rf"/{Labels.WIKI.value} \- справочник платформы" + "\n"
+    message += rf"/{Labels.LEGEND.value} \- сокращения районов" + "\n"
 
     update.message.reply_markdown_v2(text=message)
 
@@ -75,9 +75,7 @@ def legend_command(update: Update, _: CallbackContext) -> None:
 @log
 @auth_check
 def cancel_command(update: Update, _: CallbackContext) -> None:
-    message = r"Команда cancel"
-
     update.message.reply_markdown_v2(
-        text=message, reply_markup=ReplyKeyboardRemove())
+        text="Диалог прерван", reply_markup=ReplyKeyboardRemove())
 
     return ConversationHandler.END

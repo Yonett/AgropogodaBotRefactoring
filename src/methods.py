@@ -121,13 +121,9 @@ def get_formatted_report(digital_helper_stats: {}, metrics: {}, device_type: str
         message += f"0 см: \t*{temperature_avg['t0']}*°C" + "\n"
         message += f"5 см: \t*{temperature_avg['t1']}*°C" + "\n"
         message += f"10 см: \t*{temperature_avg['t2']}*°C" + "\n"
-        message += f"15 см: \t*{temperature_avg['t3']}*°C" + "\n"
-        message += f"20 см: \t*{temperature_avg['t4']}*°C" + "\n"
-        message += f"30 см: \t*{temperature_avg['t5']}*°C" + "\n"
-        message += f"40 см: \t*{temperature_avg['t6']}*°C" + "\n"
-        # message += f"50 см: \t*{temperature_avg['t7']}*°C" + "\n"
-        # message += f"60 см: \t*{temperature_avg['t8']}*°C" + "\n"
-
-    # message += fr"Кол\-во измерений: {t['TemperatureStats']['Count']}"
+        message += f"20 см: \t*{temperature_avg['t3']}*°C" + "\n"
+        message += f"30 см: \t*{temperature_avg['t4']}*°C" + "\n"
+        message += f"40 см: \t*{temperature_avg['t5']}*°C" + "\n"
+        message += f"50 см: \t*{temperature_avg['t6']}*°C" + "\n"
 
     return message

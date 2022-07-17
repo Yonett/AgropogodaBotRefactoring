@@ -54,10 +54,8 @@ def enter_region(update: Update, context: CallbackContext):
         temp = {}
         for zond_data in data_arr:
             for packet in zond_data:
-
-                if not packet[metric]:
+                if not packet.get(metric):
                     continue
-
                 if not temp.get(packet['date']):
                     temp[packet['date']] = []
 
